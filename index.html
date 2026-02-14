@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sanjai Rajasri Memories</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Poppins',sans-serif;
+}
+
+body{
+  height:100vh;
+  overflow:hidden;
+  background: linear-gradient(135deg,#2b1055,#7597de,#ff4da6);
+  background-size:300% 300%;
+  animation: bgMove 12s ease infinite alternate;
+  color:white;
+}
+
+@keyframes bgMove{
+  0%{background-position:0% 50%;}
+  100%{background-position:100% 50%;}
+}
+
+/* Floating Glow */
+body::before{
+  content:"";
+  position:absolute;
+  width:100%;
+  height:100%;
+  background:radial-gradient(circle at 30% 40%, rgba(255,0,150,0.3), transparent 40%),
+             radial-gradient(circle at 70% 60%, rgba(0,200,255,0.3), transparent 40%);
+  animation: floatGlow 10s infinite alternate ease-in-out;
+}
+@keyframes floatGlow{
+  0%{transform:translateY(0);}
+  100%{transform:translateY(-40px);}
+}
+
+/* Glass */
+.glass{
+  background:rgba(255,255,255,0.12);
+  backdrop-filter:blur(18px);
+  border-radius:20px;
+  border:1px solid rgba(255,255,255,0.2);
+  box-shadow:0 20px 50px rgba(0,0,0,0.4);
+}
+
+/* LOGIN */
+.login{
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+.login-box{
+  width:400px;
+  padding:45px;
+  text-align:center;
+  animation:fadeIn 1.5s ease;
+}
+.login-box h2{
+  margin-bottom:15px;
+  font-size:28px;
+  text-shadow:0 0 15px #ff66cc;
+}
+.login-box p{
+  font-size:14px;
+  margin-bottom:20px;
+  opacity:0.8;
+}
+.login-box input{
+  width:100%;
+  padding:12px;
+  margin:10px 0;
+  border:none;
+  border-radius:10px;
+  outline:none;
+}
+.login-box button{
+  width:100%;
+  padding:12px;
+  border:none;
+  border-radius:10px;
+  background:linear-gradient(45deg,#ff4da6,#7f00ff);
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+  transition:0.4s;
+}
+.login-box button:hover{
+  transform:scale(1.08);
+  box-shadow:0 0 25px #ff4da6;
+}
+@keyframes fadeIn{
+  from{opacity:0;transform:scale(0.8);}
+  to{opacity:1;transform:scale(1);}
+}
+
+/* DASHBOARD */
+.dashboard{
+  display:none;
+  padding:40px;
+  height:100vh;
+  overflow:auto;
+}
+.header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:40px;
+}
+.header h2{
+  font-size:26px;
+}
+.quote{
+  text-align:center;
+  margin-bottom:40px;
+  font-style:italic;
+  opacity:0.8;
+}
+
+/* FOLDERS */
+.folders{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:30px;
+}
+.folder{
+  padding:30px;
+  cursor:pointer;
+  transition:0.4s;
+}
+.folder:hover{
+  transform:translateY(-10px) scale(1.05);
+  box-shadow:0 25px 60px rgba(255,0,150,0.5);
+}
+.folder h3{
+  margin-bottom:10px;
+}
+
+/* FOLDER PAGE */
+.folder-page{
+  display:none;
+  padding:40px;
+  height:100vh;
+  overflow:auto;
+}
+.memory-card{
+  padding:20px;
+  margin:15px 0;
+  border-radius:15px;
+  background:rgba(255,255,255,0.18);
+  backdrop-filter:blur(15px);
+  animation:slideUp 0.5s ease;
+}
+.memory-card img{
+  max-width:100%;
+  border-radius:10px;
+  margin-top:10px;
+}
+@keyframes slideUp{
+  from{opacity:0;transform:translateY(30px);}
+  to{opacity:1;transform:translateY(0);}
+}
+
+button{
+  padding:8px 15px;
+  border:none;
+  border-radius:8px;
+  background:linear-gradient(45deg,#ff4da6,#7f00ff);
+  color:white;
+  cursor:pointer;
+  margin-top:10px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- LOGIN -->
+<div class="login" id="loginPage">
+  <div class="login-box glass">
+    <h2>💖 Sanjai Rajasri Memories</h2>
+    <p>"Every memory deserves its own universe."</p>
+    <input type="email" id="email" placeholder="Email">
+    <input type="password" id="password" placeholder="Password">
+    <button onclick="login()">Enter</button>
+    <p id="error" style="color:#ffcccc;"></p>
+  </div>
+</div>
+
+<!-- DASHBOARD -->
+<div class="dashboard" id="dashboard">
+  <div class="header">
+    <h2>📁 Sanjai Rajasri Memories</h2>
+    <button onclick="logout()">Logout</button>
+  </div>
+
+  <div class="quote">
+    “Some moments stay forever, not in time… but in heart.”
+  </div>
+
+  <div class="folders">
+    <div class="folder glass" onclick="openFolder('love')">
+      <h3>💖 Love Moments</h3>
+      <p>"Where hearts speak without words."</p>
+    </div>
+
+    <div class="folder glass" onclick="openFolder('special')">
+      <h3>🌸 Special Days</h3>
+      <p>"Days that changed everything."</p>
+    </div>
+
+    <div class="folder glass" onclick="openFolder('future')">
+      <h3>✨ Future Dreams</h3>
+      <p>"Our story is still being written."</p>
+    </div>
+  </div>
+</div>
+
+<!-- FOLDER PAGE -->
+<div class="folder-page" id="folderPage">
+  <button onclick="back()">⬅ Back</button>
+  <h2 id="folderTitle"></h2>
+  <br>
+  <input type="text" id="title" placeholder="Memory Title">
+  <input type="date" id="date">
+  <textarea id="desc" placeholder="Description" style="width:100%;padding:8px;margin-top:8px;border-radius:6px;"></textarea>
+  <input type="file" id="photo">
+  <button onclick="saveMemory()">Save Memory</button>
+
+  <div id="memoryContainer"></div>
+</div>
+
+<script>
+let currentFolder="";
+
+function login(){
+  if(email.value==="sanjai@gmail.com" && password.value==="1234"){
+    loginPage.style.display="none";
+    dashboard.style.display="block";
+  } else {
+    error.innerText="Invalid Login!";
+  }
+}
+
+function logout(){
+  location.reload();
+}
+
+function openFolder(name){
+  currentFolder=name;
+  dashboard.style.display="none";
+  folderPage.style.display="block";
+  folderTitle.innerText=name.toUpperCase();
+  loadMemories();
+}
+
+function back(){
+  folderPage.style.display="none";
+  dashboard.style.display="block";
+}
+
+function saveMemory(){
+  let memories=JSON.parse(localStorage.getItem(currentFolder))||[];
+  let reader=new FileReader();
+  let file=photo.files[0];
+
+  if(file){
+    reader.onload=function(){
+      memories.push({t:title.value,d:date.value,ds:desc.value,img:reader.result});
+      localStorage.setItem(currentFolder,JSON.stringify(memories));
+      loadMemories();
+    }
+    reader.readAsDataURL(file);
+  }else{
+    memories.push({t:title.value,d:date.value,ds:desc.value,img:null});
+    localStorage.setItem(currentFolder,JSON.stringify(memories));
+    loadMemories();
+  }
+
+  title.value="";
+  date.value="";
+  desc.value="";
+  photo.value="";
+}
+
+function loadMemories(){
+  memoryContainer.innerHTML="";
+  let memories=JSON.parse(localStorage.getItem(currentFolder))||[];
+  memories.forEach(m=>{
+    let div=document.createElement("div");
+    div.className="memory-card";
+    div.innerHTML=`
+      <h3>${m.t}</h3>
+      <small>${m.d}</small>
+      <p>${m.ds}</p>
+      ${m.img? `<img src="${m.img}">`:""}
+    `;
+    memoryContainer.appendChild(div);
+  });
+}
+</script>
+
+</body>
+</html>
